@@ -6,18 +6,18 @@
              x:DataType="{x:Type vm:ViewModel}">
 
     <VerticalStackLayout>
+        <Button Text="Select using Binding" Command="{Binding PreSelectUsingBindingCommand}" />
+        <Button Text="Select using Method" Command="{Binding PreSelectUsingMethodCommand}" />
         <CollectionView x:Name="collectionView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="Multiple"
                         SelectedItems="{Binding SelectedItems, Mode=TwoWay}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Label Text="{Binding .}" FontSize="Small" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" Margin="10"/>
+                    <Label Text="{Binding .}" FontSize="Small" Margin="10"/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Select using Binding" Command="{Binding PreSelectUsingBindingCommand}" />
-        <Button Text="Select using Method" Command="{Binding PreSelectUsingMethodCommand}" />
     </VerticalStackLayout>
 
 </ContentPage>
