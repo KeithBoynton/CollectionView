@@ -7,7 +7,6 @@
 
     <VerticalStackLayout>
         <Button Text="Select using Binding" Command="{Binding PreSelectUsingBindingCommand}" />
-        <Button Text="Select using Method" Command="{Binding PreSelectUsingMethodCommand}" />
         <CollectionView x:Name="collectionView"
                         ItemsSource="{Binding Items}"
                         SelectionMode="Multiple"

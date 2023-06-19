@@ -1,14 +1,12 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace MauiApp1
 {
-    public partial class ViewModel : INotifyPropertyChanged
+    public partial class ViewModel : ObservableObject
     {
-        readonly CollectionView _collectionView;
-
-        public ViewModel(CollectionView collectionView)
+        public ViewModel()
         {
             // Set up the items
             Items = new ObservableCollection<string> { "one", "two", "three", "four", "five" };
@@ -18,37 +16,16 @@ namespace MauiApp1
             {
                 Items[1], Items[3]
             };
-
-            _collectionView = collectionView;
-
-            /* You can comment out the above SelectedItems assignment and un-comment this and it still doesn't preselect.
-             * It only works when it's triggered from the PreSelectUsingMethod command.
-             * 
-            var preSelectedList = new ObservableCollection<object> { Items[1], Items[3] };
-            _collectionView.UpdateSelectedItems(preSelectedList);
-            SelectedItems = preSelectedList;
-            */
         }
 
         public ObservableCollection<string> Items { get; set; }
 
         public ObservableCollection<object> SelectedItems
         {
-            get
-            {
-                return selectedItems;
-            }
-            set
-            {
-                if (selectedItems != value)
-                {
-                    selectedItems = value;
-                }
-            }
+            get => selectedItems;
+            set => SetProperty(ref selectedItems, value);
         }
         ObservableCollection<object> selectedItems;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [RelayCommand]
         Task PreSelectUsingBinding()
@@ -58,14 +35,11 @@ namespace MauiApp1
             return Task.CompletedTask;
         }
 
-        [RelayCommand]
-        Task PreSelectUsingMethod()
+        public void PreSelectFromOnAppearing()
         {
-            var preSelectedList = new ObservableCollection<object> { Items[1], Items[3] };
-            _collectionView.UpdateSelectedItems(preSelectedList);
-            SelectedItems = preSelectedList;
-
-            return Task.CompletedTask;
+            SelectedItems.Clear();
+            SelectedItems.Add(Items[1]);
+            SelectedItems.Add(Items[3]);
         }
     }
 }

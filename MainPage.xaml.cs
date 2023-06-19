@@ -2,10 +2,18 @@
 
 public partial class MainPage : ContentPage
 {
+    readonly ViewModel vm;
+
 	public MainPage()
 	{
 		InitializeComponent();
 
-		BindingContext = new ViewModel(collectionView);
+		BindingContext = vm = new ViewModel();
 	}
+
+    protected override void OnAppearing()
+    {
+		vm.PreSelectFromOnAppearing();
+        base.OnAppearing();
+    }
 }
